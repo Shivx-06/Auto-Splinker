@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Manual - Smart Farm</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+
+<body>
+
+<div class="card">
+<h1>SMART FARM</h1>
+<h2>Manual Mode</h2>
+
+<div class="status-box" id="pumpBox">
+    <h3>ปั๊ม</h3>
+    <div id="pumpStatus" class="status-text">--</div>
+</div>
+
+<div class="status-box" id="soilBox">
+    <h3>ความชื้นดิน</h3>
+    <div id="soilStatus" class="status-text">--</div>
+</div>
+
+<div class="btn-group">
+<button class="btn btn-on" onclick="pumpOn()">ON</button>
+<button class="btn btn-off" onclick="pumpOff()">OFF</button>
+</div>
+
+<br>
+
+<button class="btn btn-auto" onclick="goAuto()">ไป AUTO</button>
+<button class="btn btn-logout" onclick="logout()">Logout</button>
+
+</div>
+
+<script>
+let client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt');
+
+client.on('connect',()=>{
+    console.log("MQTT Connected");
+    client.subscribe("visawa/pump/status");
+    client.subscribe("visawa/soil");
+});
+
+client.on('message',(topic,message)=>{
+    let msg = message.toString();
+
+    // ----- Pump Status -----
+    if(topic==="visawa/pump/status"){
+        let pumpText = document.getElementById("pumpStatus");
+        let pumpBox = document.getElementById("pumpBox");
+
+        pumpText.innerText = msg;
+
+        pumpBox.classList.remove("on","off");
+
+        if(msg==="ON"){
+            pumpBox.classList.add("on");
+        }else{
+            pumpBox.classList.add("off");
+        }
+    }
+
+    // ----- Soil Status -----
+    if(topic==="visawa/soil"){
+        let soilText = document.getElementById("soilStatus");
+        let soilBox = document.getElementById("soilBox");
+
+        soilText.innerText = msg;
+
+        soilBox.classList.remove("wet","dry");
+
+        if(msg==="WET"){
+            soilBox.classList.add("wet");
+        }else if(msg==="DRY"){
+            soilBox.classList.add("dry");
+        }
+    }
+});
+
+function pumpOn(){ 
+    client.publish("visawa/pump/set","ON"); 
+}
+
+function pumpOff(){ 
+    client.publish("visawa/pump/set","OFF"); 
+}
+
+function goAuto(){ 
+    window.location="auto.html"; 
+}
+
+function logout(){
+    client.end();
+    window.location="index.html";
+}
+</script>
+
+</body>
+</html>

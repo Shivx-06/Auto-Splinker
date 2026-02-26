@@ -1,0 +1,323 @@
+/* ===== GLOBAL ===== */
+body{
+    margin:0;
+    padding:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #0f2027, #0a0f1c);
+    color:#00ffcc;
+    text-align:center;
+}
+
+/* ===== CARD ===== */
+.card{
+    background: rgba(0, 20, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid #00ffcc;
+    border-radius: 16px;
+    width: 360px;
+    margin: 100px auto;
+    padding: 30px;
+    box-shadow: 0 0 25px #00ffcc44;
+}
+
+/* ===== HEADINGS ===== */
+h1{
+    margin-top:0;
+    font-size:28px;
+    letter-spacing:2px;
+}
+
+h2{
+    font-weight:400;
+    margin-bottom:25px;
+}
+
+/* ===== STATUS TEXT ===== */
+h3{
+    font-weight:400;
+    margin:10px 0;
+}
+
+/* ===== BUTTON BASE ===== */
+.btn{
+    padding:12px 20px;
+    margin:8px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+    min-width:100px;
+}
+
+/* ===== BUTTON STYLES ===== */
+.btn-on{
+    background:#00ffcc;
+    color:#000;
+    box-shadow:0 0 15px #00ffcc;
+}
+
+.btn-on:hover{
+    background:#00e6b8;
+}
+
+.btn-off{
+    background:#ff3b3b;
+    color:white;
+    box-shadow:0 0 15px #ff3b3b;
+}
+
+.btn-off:hover{
+    background:#e60000;
+}
+
+.btn-auto{
+    background:#0066ff;
+    color:white;
+    box-shadow:0 0 15px #0066ff;
+}
+
+.btn-auto:hover{
+    background:#004dcc;
+}
+
+/* ===== LOGIN INPUT ===== */
+input{
+    padding:12px;
+    width:80%;
+    margin:10px;
+    border-radius:8px;
+    border:1px solid #00ffcc;
+    background:#0a0f1c;
+    color:#00ffcc;
+}
+
+/* ===== GROUP ===== */
+.btn-group{
+    margin-top:15px;
+}
+
+/* ===== AUTO BUTTON ===== */
+.btn-auto-start{
+    background: linear-gradient(45deg,#00ffcc,#00ccff);
+    color:#000;
+    font-weight:bold;
+    box-shadow:0 0 20px #00ffcc;
+}
+
+.btn-auto-start:hover{
+    transform:scale(1.05);
+}
+
+/* ===== AUTO ACTIVE ===== */
+.btn-auto-start.active{
+    background:#00ff00;
+    box-shadow:0 0 25px #00ff00, 0 0 50px #00ff00;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{ box-shadow:0 0 10px #00ff00; }
+    50%{ box-shadow:0 0 30px #00ff00; }
+    100%{ box-shadow:0 0 10px #00ff00; }
+}
+
+/* ===== BACK BUTTON ===== */
+.btn-back{
+    background:#222;
+    color:#00ffcc;
+    border:1px solid #00ffcc;
+}
+
+.btn-back:hover{
+    background:#00ffcc;
+    color:#000;
+}
+
+/* ===== COUNTDOWN STYLE ===== */
+.countdown{
+    font-size:40px;
+    letter-spacing:3px;
+    margin:20px 0;
+    text-shadow:0 0 20px #00ffcc;
+}
+
+/* ===== STATUS BOX ===== */
+.status-box{
+    border:3px solid #ccc;
+    border-radius:15px;
+    padding:15px;
+    margin:15px 0;
+    transition:0.3s;
+}
+
+.status-text{
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* Pump ON/OFF */
+.status-box.on{
+    border-color:green;
+    background:#eaffea;
+}
+
+/* .status-box.off{
+    border-color:gray;
+    background:#f5f5f5;
+} */
+
+/* Soil */
+.status-box.wet{
+    border-color:#00bfff;
+    background:#7ca2b4;
+}
+
+.status-box.dry{
+    border-color:#ff3b3b;
+    background:#ffeaea;
+}
+
+/* Logout button */
+.btn-logout{
+    background:#333;
+    color:white;
+}
+
+.btn-logout:hover{
+    background:#000;
+}
+
+/* ===== Login Button ===== */
+.btn-login{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:#4CAF50;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-login:hover{
+    background:#2E8B57;
+    transform:scale(1.03);
+}
+
+/* ============================= */
+/* ===== RESPONSIVE DESIGN ===== */
+/* ============================= */
+
+/* ทำให้ card ไม่ล้นจอ */
+.card{
+    max-width: 95%;
+}
+
+/* ปรับ input ไม่ล้น */
+input{
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ปรับปุ่มไม่ล้น */
+.btn{
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ===== Tablet (768px ลงมา) ===== */
+@media (max-width: 768px){
+
+    .card{
+        width: 90%;
+        margin: 60px auto;
+        padding: 25px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    .countdown{
+        font-size:32px;
+    }
+
+    .status-text{
+        font-size:24px;
+    }
+
+}
+
+/* ===== Mobile (480px ลงมา) ===== */
+@media (max-width: 480px){
+
+    body{
+        padding:10px;
+    }
+
+    .card{
+        width: 100%;
+        margin: 30px auto;
+        padding:20px;
+        border-radius:12px;
+    }
+
+    h1{
+        font-size:20px;
+        letter-spacing:1px;
+    }
+
+    h2{
+        font-size:18px;
+    }
+
+    h3{
+        font-size:16px;
+    }
+
+    .countdown{
+        font-size:26px;
+    }
+
+    .status-text{
+        font-size:20px;
+    }
+
+    .btn{
+        width:100%;
+        margin:8px 0;
+    }
+
+    .btn-group{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+
+    input{
+        width:100%;
+    }
+
+}
+
+/* ===== Large Screen (1200px ขึ้นไป) ===== */
+@media (min-width: 1200px){
+
+    .card{
+        width:420px;
+    }
+
+    h1{
+        font-size:30px;
+    }
+
+    .countdown{
+        font-size:44px;
+    }
+}

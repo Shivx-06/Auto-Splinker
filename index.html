@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login - Smart Farm</title>
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="login-bg">
+
+<div class="login-container">
+    <div class="card login-card">
+        <h1 class="logo">🌱 SMART FARM</h1>
+        <h2>เข้าสู่ระบบ</h2>
+
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Username">
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password">
+        </div>
+
+        <button class="btn-login" onclick="login()">เข้าสู่ระบบ</button>
+
+        <p id="error" class="error-text"></p>
+    </div>
+</div>
+
+<script>
+function login(){
+
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+    let error = document.getElementById("error");
+
+    // ล้างข้อความ error ก่อน
+    error.innerText = "";
+
+    // ตรวจสอบหลาย user
+    if(
+        (user==="admin" && pass==="1234") ||
+        (user==="regency" && pass==="0859603510")
+      ){
+        
+        window.location="man.html";
+    }
+    else{
+        error.innerText="❌ ข้อมูลไม่ถูกต้อง";
+    }
+}
+</script>
+
+</body>
+</html>

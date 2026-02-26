@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Auto - Smart Farm</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+</head>
+<body>
+
+<div class="card">
+
+<h1>SMART FARM</h1>
+<h2>AUTO MODE</h2>
+
+<h3>ปั๊ม: <span id="pumpStatus">--</span></h3>
+<h3>สถานะ: <span id="autoState">--</span></h3>
+
+<h1 id="countdown" class="countdown">--:--</h1>
+
+<div class="btn-group">
+<button id="autoBtn" class="btn btn-auto-start" onclick="toggleAuto()">
+🚀 เริ่ม AUTO
+</button>
+
+<button class="btn btn-back" onclick="back()">
+⟵ กลับ Manual
+</button>
+</div>
+
+</div>
+
+<script>
+
+let client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt');
+let autoRunning = false;
+
+const autoBtn = document.getElementById("autoBtn");
+const pumpStatus = document.getElementById("pumpStatus");
+const autoState = document.getElementById("autoState");
+const countdown = document.getElementById("countdown");
+
+
+// ---------------- MQTT CONNECT ----------------
+client.on('connect',()=>{
+    console.log("MQTT Connected");
+    client.subscribe("visawa/pump/status");
+    client.subscribe("visawa/pump/auto/status");
+});
+
+
+// ---------------- MQTT MESSAGE ----------------
+client.on('message',(topic,message)=>{
+
+    let msg = message.toString();
+
+    // ----- Pump Status -----
+    if(topic==="visawa/pump/status"){
+        pumpStatus.innerText = msg;
+    }
+
+    // ----- Auto Status -----
+    if(topic==="visawa/pump/auto/status"){
+
+        // ===== STOP =====
+        if(msg==="STOP"){
+
+            autoState.innerText="STOP";
+            countdown.innerText="--:--";
+
+            autoBtn.classList.remove("active");
+            autoBtn.innerHTML="🚀 เริ่ม AUTO";
+            autoRunning=false;
+            return;
+        }
+
+        // ===== PUMPING / WAITING =====
+        let parts = msg.split(":");
+
+        if(parts.length === 2){
+
+            let state = parts[0];
+            let sec = parseInt(parts[1]);
+
+            if(isNaN(sec)) return;
+
+            let m = Math.floor(sec/60);
+            let s = sec%60;
+
+            autoState.innerText = state;
+
+            countdown.innerText =
+                String(m).padStart(2,'0') + ":" +
+                String(s).padStart(2,'0');
+        }
+    }
+});
+
+
+// ---------------- TOGGLE AUTO ----------------
+function toggleAuto(){
+
+    if(!autoRunning){
+
+        // START AUTO
+        client.publish("visawa/pump/auto","ON");
+
+        autoBtn.classList.add("active");
+        autoBtn.innerHTML="⚡ AUTO กำลังทำงาน";
+        autoRunning = true;
+
+    }else{
+
+        // STOP AUTO
+        client.publish("visawa/pump/auto","OFF");
+
+        autoBtn.classList.remove("active");
+        autoBtn.innerHTML="🚀 เริ่ม AUTO";
+        autoRunning = false;
+    }
+}
+
+
+// ---------------- BACK ----------------
+function back(){
+    window.location="man.html";
+}
+
+</script>
+
+</body>
+</html>
